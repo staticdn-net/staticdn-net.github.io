@@ -2,15 +2,14 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <link rel="preconnect" href="https://use.sevencdn.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>网站建设中</title>
     
     <!-- 引入 Tailwind CSS -->
-    <script src="https://use.sevencdn.com/npm/@tailwindcss/browser@4.1.12/dist/index.global.js"></script>
+    <script src="https://01kepns448f75cfkzprakm2sqz.esa.staticdn.net/npm/@tailwindcss/browser@4.1.12/dist/index.global.js"></script>
     
     <!-- 引入 Google Fonts - 'Orbitron' 字体 -->
-    <link href="https://use.sevencdn.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     
     <style>
         /* 自定义样式 */
@@ -72,87 +71,6 @@
             蜀ICP备19017898号-1
         </a>
     </footer>
-
-
-    <!-- 引入 three.js 库 -->
-    <script src="https://use.sevencdn.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <script>
-        // --- Three.js 动态背景脚本 ---
-
-        // 1. 初始化场景、相机和渲染器
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({
-            canvas: document.getElementById('particle-canvas'),
-            alpha: true // 允许透明背景
-        });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-
-        // 2. 创建粒子 (优化)
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 2500; // 减少粒子数量，使其更稀疏
-
-        const posArray = new Float32Array(particlesCount * 3); // 每个粒子有 x, y, z 三个坐标
-
-        for (let i = 0; i < particlesCount * 3; i++) {
-            // 在一个球体内随机分布粒子
-            posArray[i] = (Math.random() - 0.5) * 10;
-        }
-
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-
-        // 3. 创建粒子材质 (优化)
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.012, // 减小粒子尺寸
-            color: 0x00ffff, // 青色粒子
-            blending: THREE.AdditiveBlending, // 混合模式，产生发光效果
-        });
-
-        const particleMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particleMesh);
-
-        camera.position.z = 5;
-
-        // 4. 鼠标交互
-        let mouseX = 0;
-        let mouseY = 0;
-
-        document.addEventListener('mousemove', (event) => {
-            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-        });
-
-        // 5. 动画循环 (优化)
-        const clock = new THREE.Clock();
-
-        const animate = () => {
-            requestAnimationFrame(animate);
-
-            const elapsedTime = clock.getElapsedTime();
-
-            // 减慢旋转速度
-            particleMesh.rotation.y = elapsedTime * 0.05;
-            particleMesh.rotation.x = elapsedTime * 0.025;
-
-            // 根据鼠标位置轻微移动相机，产生视差效果
-            camera.position.x += (mouseX * 0.1 - camera.position.x) * 0.02;
-            camera.position.y += (mouseY * 0.1 - camera.position.y) * 0.02;
-            camera.lookAt(scene.position);
-
-
-            renderer.render(scene, camera);
-        };
-
-        animate();
-
-        // 6. 响应式调整
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-        });
-    </script>
 
 </body>
 </html>
